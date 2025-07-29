@@ -20,9 +20,7 @@ export PATH="$HOME/.local/bin:$PATH"
 curl 'https://invent.kde.org/sdk/kde-builder/-/raw/master/scripts/initial_setup.sh' > initial_setup.sh
 bash initial_setup.sh
 kde-builder --generate-config
-curl 'https://invent.kde.org/sysadmin/repo-metadata/-/raw/master/distro-dependencies/fedora.ini' > deps
-sed -i '1d' deps
-dnf5 install -y --skip-broken $(grep -vE '^\s*#|^\s*$' deps)
+kde-builder --install-distro-packages --prompt-answer Y
 FILE=~/.config/kde-builder.yaml
 
 # Ensure install-dir: /usr/
