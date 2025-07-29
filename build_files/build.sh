@@ -32,12 +32,18 @@ CMAKE_OPTIONS='cmake-options: >
     -DCMAKE_BUILD_TYPE=RelWithDebInfo -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DBUILD_HTML_DOCS=OFF -DBUILD_MAN_DOCS=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_LINKER_LAUNCHER=ccache -DCMAKE_CXX_LINKER_LAUNCHER=ccache'
 
 # Replace or add cmake-options block
-if grep -q '^cmake-options:' "$FILE"; then
-  # Replace the cmake-options block (assuming it's a folded block starting with '>')
-  sed -i '/^cmake-options: *>/,/^[^ ]/c\'"$CMAKE_OPTIONS" "$FILE"
-else
-  echo "$CMAKE_OPTIONS" >> "$FILE"
+# Remove old cmake-options block if present
+start=$(awk '/^cmake-options: *>/ {print NR}' "$FILE")
+if [ -n "$start" ]; then
+  end=$(awk "NR>$start && !/^ / {print NR; exit}" "$FILE")
+  if [ -z "$end" ]; then end=$(wc -l < "$FILE"); fi
+  sed -i "${start},${end}d" "$FILE"
 fi
+
+# Append updated cmake-options at the end
+cat >> "$FILE" <<EOF
+$CMAKE_OPTIONS
+EOF
 
 kde-builder workspace
 
