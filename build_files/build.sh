@@ -13,12 +13,13 @@ set -ouex pipefail
 dnf5 install -y sddm
 
 ### 🔧 KDE Build Dependencies
-mkdir /root
+rm -rf /root
+mkdir -p /root
 cd ~
 curl 'https://invent.kde.org/sdk/kde-builder/-/raw/master/scripts/initial_setup.sh' > initial_setup.sh
 bash initial_setup.sh
-kde-builder --generate-config
-kde-builder --install-distro-packages
+~/.local/bin/kde-builder --generate-config
+~/.local/bin/kde-builder --install-distro-packages
 FILE=~/.config/kde-builder.yaml
 
 # Ensure install-dir: /usr/
@@ -44,7 +45,7 @@ cat >> "$FILE" <<EOF
 $CMAKE_OPTIONS
 EOF
 
-kde-builder workspace
+~/.local/bin/kde-builder workspace
 
 cd /
 
