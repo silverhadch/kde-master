@@ -13,7 +13,6 @@ set -ouex pipefail
 dnf5 install -y sddm
 
 ### 🔧 KDE Build Dependencies
-log "Installing KDE"
 
 cd ~
 curl 'https://invent.kde.org/sdk/kde-builder/-/raw/master/scripts/initial_setup.sh' > initial_setup.sh
