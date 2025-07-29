@@ -13,7 +13,7 @@ set -ouex pipefail
 dnf5 install -y sddm
 
 ### 🔧 KDE Build Dependencies
-
+mkdir /root
 cd ~
 curl 'https://invent.kde.org/sdk/kde-builder/-/raw/master/scripts/initial_setup.sh' > initial_setup.sh
 bash initial_setup.sh
@@ -46,7 +46,9 @@ EOF
 
 kde-builder workspace
 
+cd /
 
+rm -rf /root
 
 # Use a COPR Example:
 #
