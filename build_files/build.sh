@@ -10,7 +10,7 @@ set -ouex pipefail
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # this installs a package from fedora repos
-dnf5 install -y sddm
+dnf5 install -y sddm git python3-dbus python3-pyyaml python3-setproctitle
 
 ### 🔧 KDE Build Dependencies
 rm -rf /root
@@ -19,7 +19,9 @@ cd ~
 curl 'https://invent.kde.org/sdk/kde-builder/-/raw/master/scripts/initial_setup.sh' > initial_setup.sh
 bash initial_setup.sh
 ~/.local/bin/kde-builder --generate-config
-~/.local/bin/kde-builder --install-distro-packages
+curl 'https://invent.kde.org/sysadmin/repo-metadata/-/raw/master/distro-dependencies/fedora.ini' > deps
+sed -i '1d' deps
+dnf5 install -y --skip-broken $(grep -vE '^\s*#|^\s*$' deps)
 FILE=~/.config/kde-builder.yaml
 
 # Ensure install-dir: /usr/
