@@ -54,7 +54,7 @@ EOF
 
 kde-builder cxx-rust-cssparser
 
-cat cxx-rust-cssparser - /root/kde/log/2025-07-30_01/cxx-rust-cssparser/build.log
+cat /root/kde/log/2025-07-30_01/cxx-rust-cssparser/build.log
 
 cd /
 
