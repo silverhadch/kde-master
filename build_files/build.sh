@@ -13,6 +13,8 @@ set -ouex pipefail
 dnf5 install -y sddm git python3-dbus python3-pyyaml python3-setproctitle
 
 ### 🔧 KDE Build Dependencies
+rm -rf /opt
+mkdir -p /opt
 rm -rf /root
 mkdir -p /root
 rm -rf /usr/local
@@ -48,7 +50,11 @@ cat >> "$FILE" <<EOF
 $CMAKE_OPTIONS
 EOF
 
-kde-builder workspace
+#kde-builder workspace
+
+kde-builder cxx-rust-cssparser
+
+cat cxx-rust-cssparser - /root/kde/log/2025-07-30_01/cxx-rust-cssparser/build.log
 
 cd /
 
