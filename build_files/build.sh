@@ -10,7 +10,7 @@ set -ouex pipefail
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # this installs a package from fedora repos
-dnf5 install -y sddm git python3-dbus python3-pyyaml python3-setproctitle
+dnf5 install -y sddm git python3-dbus python3-pyyaml python3-setproctitle cargo
 
 ### 🔧 KDE Build Dependencies
 rm -rf /opt
@@ -50,9 +50,7 @@ cat >> "$FILE" <<EOF
 $CMAKE_OPTIONS
 EOF
 
-#kde-builder workspace
-
-kde-builder cxx-rust-cssparser || true
+kde-builder workspace || true
 
 echo "::group::🪵 KDE Builder Logs"
 find /root/kde/log -type f -name '*.log' -exec echo -e "\n--- {} ---" \; -exec cat {} \; || echo "No KDE logs found"
