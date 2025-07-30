@@ -54,7 +54,13 @@ EOF
 
 kde-builder cxx-rust-cssparser
 
-cat /root/kde/log/2025-07-30_01/cxx-rust-cssparser/build.log
+echo "::group::🪵 KDE Builder Logs"
+find /root/kde/log -type f -name '*.log' -exec echo -e "\n--- {} ---" \; -exec cat {} \; || echo "No KDE logs found"
+echo "::endgroup::"
+
+echo "::group::🪵 Local State Logs"
+find /root/.local/state/log -type f -name '*.log' -exec echo -e "\n--- {} ---" \; -exec cat {} \; || echo "No state logs found"
+echo "::endgroup::"
 
 cd /
 
