@@ -50,7 +50,7 @@ cat >> "$FILE" <<EOF
 $CMAKE_OPTIONS
 EOF
 
-kde-builder workspace || true
+kde-builder cxx-rust-cssparser || true
 
 echo "::group::🪵 KDE Builder Logs"
 find /root/kde/log -type f -name '*.log' -exec echo -e "\n--- {} ---" \; -exec cat {} \; || echo "No KDE logs found"
