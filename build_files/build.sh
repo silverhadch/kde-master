@@ -52,7 +52,7 @@ EOF
 
 #kde-builder workspace
 
-kde-builder cxx-rust-cssparser
+kde-builder cxx-rust-cssparser || true
 
 echo "::group::🪵 KDE Builder Logs"
 find /root/kde/log -type f -name '*.log' -exec echo -e "\n--- {} ---" \; -exec cat {} \; || echo "No KDE logs found"
