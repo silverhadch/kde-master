@@ -50,7 +50,7 @@ cat >> "$FILE" <<EOF
 $CMAKE_OPTIONS
 EOF
 
-kde-builder workspace || true
+DESTDIR=/usr kde-builder workspace || true
 
 echo "::group::🪵 KDE Builder Logs"
 find /root/kde/log -type f -name '*.log' -exec echo -e "\n--- {} ---" \; -exec cat {} \; || echo "No KDE logs found"
@@ -61,8 +61,6 @@ find /root/.local/state/log -type f -name '*.log' -exec echo -e "\n--- {} ---" \
 echo "::endgroup::"
 
 cd /
-
-rm -rf /root
 
 # Use a COPR Example:
 #
