@@ -43,6 +43,9 @@ DESTDIR=/usr kde-builder workspace --rc-file /etc/kde-build/kde-builder.yaml || 
 
 cd /
 
+rm -rf /root
+mkdir -p /root
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
