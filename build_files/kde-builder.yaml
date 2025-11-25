@@ -5,6 +5,19 @@ config-version: 2
 global:
   branch-group: kf6-qt6
 
+  ignore-projects:
+  - kgamma
+  - kwin-x11
+  - packagekit-qt
+  - oxygen
+  - oxygen-icons
+  - oxygen-sounds
+  - plasma-nano
+  - selenium-webdriver-at-spi
+  - plymouth-kcm
+  - qqc2-breeze-style
+  - wacomtablet
+
   # Finds and includes *KDE*-based dependencies into the build. This makes
   # it easier to ensure that you have all the projects needed, but the
   # dependencies are not very fine-grained so this can result in quite a few
@@ -18,7 +31,7 @@ global:
   log-dir: /usr/kde/log
 
   cmake-options: >
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DBUILD_HTML_DOCS=OFF -DBUILD_MAN_DOCS=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_LINKER_LAUNCHER=ccache -DCMAKE_CXX_LINKER_LAUNCHER=ccache
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DBUILD_HTML_DOCS=OFF -DBUILD_MAN_DOCS=OFF
 
 
 
@@ -93,47 +106,3 @@ include ${build-configs-dir}/kde6.yaml: ""
 #
 #    project some-app:
 #      repository: https://github.com/YourUser/YourProject.git
-
-override kgamma:
-  skip-reasons:
-    - "ignored"
-
-override kwin-x11:
-  skip-reasons:
-    - "ignored"
-
-override packagekit-qt:
-  skip-reasons:
-    - "ignored"
-
-override oxygen:
-  skip-reasons:
-    - "ignored"
-
-override oxygen-icons:
-  skip-reasons:
-    - "ignored"
-
-override oxygen-sounds:
-  skip-reasons:
-    - "ignored"
-
-override plasma-nano:
-  skip-reasons:
-    - "ignored"
-
-override selenium-webdriver-at-spi:
-  skip-reasons:
-    - "ignored"
-
-override plymouth-kcm:
-  skip-reasons:
-    - "ignored"
-
-override qqc2-breeze-style:
-  skip-reasons:
-    - "ignored"
-
-override wacomtablet:
-  skip-reasons:
-    - "ignored"
