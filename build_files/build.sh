@@ -13,52 +13,16 @@ set -ouex pipefail
 dnf5 install -y sddm git python3-dbus python3-pyyaml python3-setproctitle cargo
 
 ### 🔧 KDE Build Dependencies
-rm -rf /opt
-mkdir -p /opt
 rm -rf /root
 mkdir -p /root
-rm -rf /usr/local
-mkdir -p /usr/local
 cd ~
 export PATH="$HOME/.local/bin:$PATH"
 curl 'https://invent.kde.org/sdk/kde-builder/-/raw/master/scripts/initial_setup.sh' > initial_setup.sh
 bash initial_setup.sh
 kde-builder --generate-config
 kde-builder --install-distro-packages --prompt-answer Y
-FILE=~/.config/kde-builder.yaml
 
-# Ensure install-dir: /usr/
-grep -q '^install-dir:' "$FILE" \
-  && sed -i 's|^install-dir:.*|install-dir: /usr/|' "$FILE" \
-  || echo 'install-dir: /usr/' >> "$FILE"
-
-# Desired cmake-options line (YAML folded block style)
-CMAKE_OPTIONS='cmake-options: >
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DBUILD_HTML_DOCS=OFF -DBUILD_MAN_DOCS=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_LINKER_LAUNCHER=ccache -DCMAKE_CXX_LINKER_LAUNCHER=ccache'
-
-# Replace or add cmake-options block
-# Remove old cmake-options block if present
-start=$(awk '/^cmake-options: *>/ {print NR}' "$FILE")
-if [ -n "$start" ]; then
-  end=$(awk "NR>$start && !/^ / {print NR; exit}" "$FILE")
-  if [ -z "$end" ]; then end=$(wc -l < "$FILE"); fi
-  sed -i "${start},${end}d" "$FILE"
-fi
-
-# Append updated cmake-options at the end
-cat >> "$FILE" <<EOF
-$CMAKE_OPTIONS
-EOF
-
-DESTDIR=/usr kde-builder workspace || true
-
-echo "::group::🪵 KDE Builder Logs"
-find /root/kde/log -type f -name '*.log' -exec echo -e "\n--- {} ---" \; -exec cat {} \; || echo "No KDE logs found"
-echo "::endgroup::"
-
-echo "::group::🪵 Local State Logs"
-find /root/.local/state/log -type f -name '*.log' -exec echo -e "\n--- {} ---" \; -exec cat {} \; || echo "No state logs found"
-echo "::endgroup::"
+DESTDIR=/usr kde-builder workspace --rc-file /ctx/kde-builder.yaml || true
 
 cd /
 

@@ -12,13 +12,15 @@ global:
   include-dependencies: true
 
   # qt-install-dir: ~/kde/qt  # Directory to install Qt if kde-builder supplies it
-  source-dir: /usr/local/kde/src
-  build-dir: /usr/local/kde/build
-  install-dir: /usr/local
-  log-dir: /usr/local/kde/log
+  source-dir: /usr/kde/src
+  build-dir: /usr/kde/build
+  install-dir: /usr
+  log-dir: /usr/kde/log
 
   cmake-options: >
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DBUILD_HTML_DOCS=OFF -DBUILD_MAN_DOCS=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_LINKER_LAUNCHER=ccache -DCMAKE_CXX_LINKER_LAUNCHER=ccache
+
+
 
   # kde-builder sets 2 options which is used in options like make-options or set-env
   # to help manage the number of compile jobs that happen during a build:
@@ -91,3 +93,36 @@ include ${build-configs-dir}/kde6.yaml: ""
 #
 #    project some-app:
 #      repository: https://github.com/YourUser/YourProject.git
+
+override kgamma:
+  build: false
+
+override kwin-x11:
+  build: false
+
+override packagekit-qt:
+  build: false
+
+override oxygen:
+  build: false
+
+override oxygen-icons:
+  build: false
+
+override oxygen-sounds:
+  build: false
+
+override plasma-nano:
+  build: false
+
+override selenium-webdriver-at-spi:
+  build: false
+
+override plymouth-kcm:
+  build: false
+
+override qqc2-breeze-style:
+  build: false
+
+override wacomtablet:
+  build: false
