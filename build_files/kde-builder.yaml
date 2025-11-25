@@ -95,34 +95,45 @@ include ${build-configs-dir}/kde6.yaml: ""
 #      repository: https://github.com/YourUser/YourProject.git
 
 override kgamma:
-  build: false
+  skip-reasons:
+    - "ignored"
 
 override kwin-x11:
-  build: false
+  skip-reasons:
+    - "ignored"
 
 override packagekit-qt:
-  build: false
+  skip-reasons:
+    - "ignored"
 
 override oxygen:
-  build: false
+  skip-reasons:
+    - "ignored"
 
 override oxygen-icons:
-  build: false
+  skip-reasons:
+    - "ignored"
 
 override oxygen-sounds:
-  build: false
+  skip-reasons:
+    - "ignored"
 
 override plasma-nano:
-  build: false
+  skip-reasons:
+    - "ignored"
 
 override selenium-webdriver-at-spi:
-  build: false
+  skip-reasons:
+    - "ignored"
 
 override plymouth-kcm:
-  build: false
+  skip-reasons:
+    - "ignored"
 
 override qqc2-breeze-style:
-  build: false
+  skip-reasons:
+    - "ignored"
 
 override wacomtablet:
-  build: false
+  skip-reasons:
+    - "ignored"

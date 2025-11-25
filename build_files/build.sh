@@ -15,6 +15,9 @@ dnf5 install -y sddm git python3-dbus python3-pyyaml python3-setproctitle cargo
 ### 🔧 KDE Build Dependencies
 rm -rf /root
 mkdir -p /root
+mkdir -p /etc/kde-build
+cp /ctx/kde-builder.yaml /etc/kde-build/kde-builder.yaml
+cat /etc/kde-build/kde-builder.yaml
 cd ~
 export PATH="$HOME/.local/bin:$PATH"
 curl 'https://invent.kde.org/sdk/kde-builder/-/raw/master/scripts/initial_setup.sh' > initial_setup.sh
@@ -22,7 +25,7 @@ bash initial_setup.sh
 kde-builder --generate-config
 kde-builder --install-distro-packages --prompt-answer Y
 
-DESTDIR=/usr kde-builder workspace --rc-file /ctx/kde-builder.yaml || true
+DESTDIR=/usr kde-builder workspace --rc-file /etc/kde-build/kde-builder.yaml || true
 
 cd /
 
