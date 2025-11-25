@@ -10,7 +10,11 @@ set -ouex pipefail
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # this installs a package from fedora repos
-dnf5 install -y sddm git python3-dbus python3-pyyaml python3-setproctitle cargo
+dnf5 groupinstall -y "Development Tools"
+
+dnf5 install -y \
+    sddm git ninja-build rsync cargo ccache \
+    python3-dbus python3-pyyaml python3-setproctitle python3-requests
 
 ### 🔧 KDE Build Dependencies
 rm -rf /root
