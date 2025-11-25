@@ -14,6 +14,7 @@ dnf5 group install -y development-tools
 dnf5 install -y \
     sddm git ninja-build rsync cargo ccache \
     python3-dbus python3-pyyaml python3-setproctitle python3-requests
+dnf5 install -y "kf6-*-devel" "kde-*-devel"
 
 ### 🔧 KDE Build Dependencies
 rm -rf /root
@@ -28,7 +29,17 @@ bash initial_setup.sh
 kde-builder --generate-config
 kde-builder --install-distro-packages --prompt-answer Y
 
-DESTDIR=/usr kde-builder workspace --rc-file /etc/kde-build/kde-builder.yaml || true
+DESTDIR=/usr kde-builder workspace --rc-file /etc/kde-build/kde-builder.yaml || {
+    for LOGROOT in /usr/kde/log/* /root/.local/state/log/*; do
+        [ -d "$LOGROOT" ] || continue
+        echo "=== Dumping logs from $LOGROOT ==="
+        find "$LOGROOT" -type f | sort | while read -r f; do
+            echo
+            echo "===== $f ====="
+            cat "$f"
+        done
+    done
+}
 
 cd /
 
