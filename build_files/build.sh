@@ -29,6 +29,13 @@ bash initial_setup.sh
 kde-builder --generate-config
 kde-builder --install-distro-packages --prompt-answer Y
 
+curl https://storage.kde.org/kde-linux-packages/testing/ccache/ccache.tar | tar -x || true
+# Unclear which ccache.conf gets used :(
+ccache --set-config=max_size=50G # Sets /root/.config/ccache/ccache.conf
+export CCACHE_DIR="$HOME/ccache"
+ccache --set-config=max_size=50G # Sets $CCACHE_DIR/ccache.conf
+
+
 DESTDIR=/usr kde-builder workspace --rc-file /etc/kde-build/kde-builder.yaml || {
     for LOGROOT in /usr/kde/log/* /root/.local/state/log/*; do
         [ -d "$LOGROOT" ] || continue
