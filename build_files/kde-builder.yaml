@@ -25,13 +25,15 @@ global:
   include-dependencies: true
 
   # qt-install-dir: ~/kde/qt  # Directory to install Qt if kde-builder supplies it
-  source-dir: /usr/kde/src
-  build-dir: /usr/kde/build
-  install-dir: /usr
-  log-dir: /usr/kde/log
+  source-dir: /usr/kde-master/src
+  build-dir: ~/kde/build  # Directory to build KDE into before installing
+  # qt-install-dir: ~/kde/qt  # Directory to install Qt if kde-builder supplies it
+  log-dir: ~/kde/log  # Directory to write logs into
+
+  install-dir: /usr/kde-master
 
   cmake-options: >
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DBUILD_HTML_DOCS=OFF -DBUILD_MAN_DOCS=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_LINKER_LAUNCHER=ccache -DCMAKE_CXX_LINKER_LAUNCHER=ccache
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_HTML_DOCS=OFF -DBUILD_MAN_DOCS=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_LINKER_LAUNCHER=ccache -DCMAKE_CXX_LINKER_LAUNCHER=ccache
 
 
 
@@ -106,3 +108,10 @@ include ${build-configs-dir}/kde6.yaml: ""
 #
 #    project some-app:
 #      repository: https://github.com/YourUser/YourProject.git
+
+
+override plasma-desktop:
+    cmake-options: -DBUILD_KCM_TOUCHPAD_X11=OFF -DBUILD_KCM_MOUSE_X11=OFF
+
+override plasma-workspace:
+    cmake-options: -DWITH_X11=OFF
