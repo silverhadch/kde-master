@@ -101,6 +101,20 @@ dnf5 install -y "kf6-*-devel" "kde-*-devel"
 
 install_group "KDE/Qt/PipeWire deps"    "${kde_devel_pkgs[@]}"
 
+### --------------------
+### KDE dependency list
+### --------------------
+log "Fetching KDE metadata deps..."
+kde_deps=$(curl -s "https://invent.kde.org/sysadmin/repo-metadata/-/raw/master/distro-dependencies/fedora.ini" | sed '1d' | grep -vE '^\s*#|^\s*$')
+
+if [[ -n "$kde_deps" ]]; then
+    log "Installing KDE metadata deps..."
+    echo "$kde_deps" | xargs dnf5 install -y --skip-broken --skip-unavailable --allowerasing 2>/tmp/dnf-error || \
+        error "Some KDE deps failed: $(grep -v '^Last metadata' /tmp/dnf-error | head -n5)"
+else
+    error "Failed to fetch KDE dependency metadata"
+fi
+
 ### 🔧 KDE Build Dependencies
 rm -rf /root
 mkdir -p /root
