@@ -26,7 +26,7 @@ global:
 
   # qt-install-dir: ~/kde/qt  # Directory to install Qt if kde-builder supplies it
   source-dir: /usr/kde-master/src
-  build-dir: ~/kde/build  # Directory to build KDE into before installing
+  build-dir: /usr/kde-master/build  # Directory to build KDE into before installing
   # qt-install-dir: ~/kde/qt  # Directory to install Qt if kde-builder supplies it
   log-dir: ~/kde/log  # Directory to write logs into
 
