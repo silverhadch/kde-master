@@ -6,17 +6,13 @@ global:
   branch-group: kf6-qt6
 
   ignore-projects:
+  # X11-only and we only ship Wayland
   - kgamma
   - kwin-x11
-  - packagekit-qt
-  - oxygen
-  - oxygen-icons
-  - oxygen-sounds
-  - plasma-nano
-  - selenium-webdriver-at-spi
-  - plymouth-kcm
-  - qqc2-breeze-style
   - wacomtablet
+  - packagekit-qt
+  # Not supported on immutable distros
+  - plymouth-kcm
 
   # Finds and includes *KDE*-based dependencies into the build. This makes
   # it easier to ensure that you have all the projects needed, but the
@@ -25,15 +21,22 @@ global:
   include-dependencies: true
 
   # qt-install-dir: ~/kde/qt  # Directory to install Qt if kde-builder supplies it
-  source-dir: /usr/kde-master/src
-  build-dir: /usr/kde-master/build  # Directory to build KDE into before installing
+  source-dir: ~/kde/src
+  build-dir: ~/kde/build  # Directory to build KDE into before installing
   # qt-install-dir: ~/kde/qt  # Directory to install Qt if kde-builder supplies it
   log-dir: ~/kde/log  # Directory to write logs into
 
-  install-dir: /usr/kde-master
+  # We want to trick kde-builder into building for /usr as it will be installed there
+  install-dir: /usr
 
+  # Here we trick kde-builder into creating a fakeroot under $HOME/kde so we dont interfere with stuff during build
+  set-env:
+    DESTDIR: "~/kde"
+
+  # Use Ccache for faster builds, dont build useless docs, make the libexec folder be in the Fedora Layout, put qt libs into the qt system paths,
+  # turn off python bindings as they are unused, disable testing lol
   cmake-options: >
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_HTML_DOCS=OFF -DBUILD_MAN_DOCS=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_LINKER_LAUNCHER=ccache -DCMAKE_CXX_LINKER_LAUNCHER=ccache
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_HTML_DOCS=OFF -DBUILD_MAN_DOCS=OFF -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_LINKER_LAUNCHER=ccache -DCMAKE_CXX_LINKER_LAUNCHER=ccache -DCMAKE_INSTALL_LIBEXECDIR=libexec -DKDE_INSTALL_USE_QT_SYS_PATHS=ON -DBUILD_PYTHON_BINDINGS=OFF -DWITH_PYTHON_VENDORING=OFF -DBUILD_QCH=OFF -DBUILD_TESTING=OFF
 
 
 
@@ -49,7 +52,7 @@ global:
   num-cores: "auto"
   num-cores-low-mem: "auto"
 
-  # Makes the built-from-source Plasma session accessible from the SDDM login screen.
+  # We install into /usr so no reason for this
   install-login-session: false
 
   # Stop the build process on the first failure. If set to false, when kde-builder
@@ -109,7 +112,7 @@ include ${build-configs-dir}/kde6.yaml: ""
 #    project some-app:
 #      repository: https://github.com/YourUser/YourProject.git
 
-
+# Dont build X11 Support, X11 is dead. Long live Wayland!
 override plasma-desktop:
     cmake-options: -DBUILD_KCM_TOUCHPAD_X11=OFF -DBUILD_KCM_MOUSE_X11=OFF
 
