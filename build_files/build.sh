@@ -178,7 +178,7 @@ kde-builder workspace || {
     log "Build failed — dumping latest logs…"
 
     # Combine both potential log roots
-    for LOGROOT in ~/kde/log /root/.local/state/log; do
+    for LOGROOT in ~/kde/log; do
         [ -d "$LOGROOT" ] || continue
 
         # Get newest 5 directories
