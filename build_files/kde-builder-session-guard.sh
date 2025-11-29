@@ -1,33 +1,30 @@
 #!/bin/bash
-set -ouex pipefail
+set -euo pipefail
 
-# --------------------
-# Guard: refuse to overwrite user session
-# --------------------
-check_override() {
-    local dirs=(
-        /usr/local/share/wayland-sessions
-        /usr/local/share/xsessions
-    )
+check_dir() {
+    local dir="$1"
+    local files=("$dir"/*.desktop)
 
-    for d in "${dirs[@]}"; do
-        [ -d "$d" ] || continue
+    # Falls das Globbing nichts findet → überspringen
+    [[ ! -e "${files[0]}" ]] && return 0
 
-        for f in "$d"/*.desktop; do
-            [ -f "$f" ] || continue
-
-            # If the file exists and does NOT contain the canonical session path
-            if ! grep -q '/usr/kde-master' "$f"; then
-                echo "Detected user session override in: $f"
-                echo "Skipping kde-builder login-session installation."
+    for file in "${files[@]}"; do
+        # Ignoriere Non-Plasma Sessions
+        if grep -q "^DesktopNames=.*KDE" "$file"; then
+            # Enthält Exec die erwartete /usr/kde-master Basis?
+            if ! grep -q "^Exec=.*/usr/kde-master/" "$file"; then
+                echo "Detected locally overridden Plasma session in $file"
                 return 1
             fi
-        done
+        fi
     done
-
-    return 0
 }
 
-if check_override; then
+if check_dir /usr/local/share/wayland-sessions \
+   && check_dir /usr/local/share/xsessions; then
+    echo "No override found. Running kde-builder..."
     kde-builder --install-login-session-only --rc-file /usr/kde-master/kde-builder.yaml
+else
+    echo "Override detected. Not touching user session."
 fi
+
