@@ -36,19 +36,19 @@ global:
   # Use Ccache for faster builds, dont build useless docs, make the libexec folder be in the Fedora Layout, put qt libs into the qt system paths,
   # turn off python bindings as they are unused, disable testing lol
   cmake-options: >
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo
-  -DBUILD_HTML_DOCS=OFF
-  -DBUILD_MAN_DOCS=OFF
-  -DCMAKE_C_COMPILER_LAUNCHER=ccache
-  -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
-  -DCMAKE_C_LINKER_LAUNCHER=ccache
-  -DCMAKE_CXX_LINKER_LAUNCHER=ccache
-  -DKDE_INSTALL_LIBEXECDIR=libexec
-  -DKDE_INSTALL_USE_QT_SYS_PATHS=ON
-  -DBUILD_PYTHON_BINDINGS=OFF
-  -DWITH_PYTHON_VENDORING=OFF
-  -DBUILD_QCH=OFF
-  -DBUILD_TESTING=OFF
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    -DBUILD_HTML_DOCS=OFF
+    -DBUILD_MAN_DOCS=OFF
+    -DCMAKE_C_COMPILER_LAUNCHER=ccache
+    -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+    -DCMAKE_C_LINKER_LAUNCHER=ccache
+    -DCMAKE_CXX_LINKER_LAUNCHER=ccache
+    -DKDE_INSTALL_LIBEXECDIR=libexec
+    -DKDE_INSTALL_USE_QT_SYS_PATHS=ON
+    -DBUILD_PYTHON_BINDINGS=OFF
+    -DWITH_PYTHON_VENDORING=OFF
+    -DBUILD_QCH=OFF
+    -DBUILD_TESTING=OFF
 
   # kde-builder sets 2 options which is used in options like make-options or set-env
   # to help manage the number of compile jobs that happen during a build:
