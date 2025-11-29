@@ -49,6 +49,8 @@ kde_devel_pkgs=(
     kdecoration-devel
     kde-*-devel
     kwayland-devel
+    qca-devel
+    qca-qt6-devel
 
     # CMake "find_package" entries for KF6 components
     "cmake(KF6Config)"
