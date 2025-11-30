@@ -29,10 +29,6 @@ global:
   # We want to trick kde-builder into building for /usr as it will be installed there
   install-dir: /usr
 
-  # Here we trick kde-builder into creating a fakeroot under $HOME/kde so we dont interfere with stuff during build
-  set-env:
-    DESTDIR: "~/kde"
-
   # Use Ccache for faster builds, dont build useless docs, make the libexec folder be in the Fedora Layout, put qt libs into the qt system paths,
   # turn off python bindings as they are unused, disable testing lol
   cmake-options: >
