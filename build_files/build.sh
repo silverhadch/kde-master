@@ -206,10 +206,6 @@ cd /
 log "Installing built from source Plasma..."
 ls /root/kde
 
-# Copy /root/kde/usr/* into /usr WITHOUT deleting anything in /usr.
-# Preserves attributes and extended data (HAX).
-rsync -aHAXv /root/kde/usr/ /usr/
-
 # Reset /root to avoid leftover garbage.
 rm -rf /root
 mkdir -p /root
