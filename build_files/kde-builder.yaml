@@ -22,12 +22,12 @@ global:
 
   # qt-install-dir: ~/kde/qt  # Directory to install Qt if kde-builder supplies it
   source-dir: ~/kde/src
-  build-dir: ~/kde/build  # Directory to build KDE into before installing
+  build-dir: /usr/kde/build  # Directory to build KDE into before installing
   # qt-install-dir: ~/kde/qt  # Directory to install Qt if kde-builder supplies it
   log-dir: ~/kde/log  # Directory to write logs into
 
   # We want to trick kde-builder into building for /usr as it will be installed there
-  install-dir: /usr
+  install-dir: /usr/kde
 
   # Use Ccache for faster builds, dont build useless docs, make the libexec folder be in the Fedora Layout, put qt libs into the qt system paths,
   # turn off python bindings as they are unused, disable testing lol
@@ -39,9 +39,8 @@ global:
     -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
     -DCMAKE_C_LINKER_LAUNCHER=ccache
     -DCMAKE_CXX_LINKER_LAUNCHER=ccache
-    -DCMAKE_INSTALL_LIBEXECDIR=lib
-    -DKDE_INSTALL_LIBEXECDIR=lib
-    -DKDE_INSTALL_USE_QT_SYS_PATHS=ON
+    -DCMAKE_INSTALL_LIBEXECDIR=libexec
+    -DKDE_INSTALL_LIBEXECDIR=libexec
     -DBUILD_PYTHON_BINDINGS=OFF
     -DWITH_PYTHON_VENDORING=OFF
     -DBUILD_QCH=OFF

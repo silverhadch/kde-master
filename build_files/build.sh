@@ -147,6 +147,11 @@ fi
 
 # Nukes /root (sometimes used as a previous build workspace) to ensure a clean state.
 rm -rf /root
+mkdir -p /usr/kde-master/
+cp /ctx/kde-builder.yaml /usr/kde/kde-builder.yaml
+cp /ctx/kde-builder-session-guard.sh /usr/bin/
+cp /ctx/kde-builder-session.service /etc/systemd/system/
+cd ~
 
 # Prepare root’s config directory.
 mkdir -p /root/.config
@@ -247,3 +252,4 @@ rm -rf "$tmpdir"
 # Example unit files to enable
 systemctl enable podman.socket
 systemctl enable sddm.service
+systemctl enable kde-builder-session.service
